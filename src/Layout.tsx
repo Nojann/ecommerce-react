@@ -1,67 +1,52 @@
 import React from 'react';
 import './index.css';
+import logo from './assets/logo.svg'
+import cart from './assets/cart.svg'
+import { Outlet } from 'react-router-dom';
+
+const Layout: React.FC = () => {
+  return (
+    <div>
+      <Navbar />
+      <div className="px-40 flex flex-1 justify-center py-5">
+        <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
+
+}
 
 const Navbar: React.FC = () => {
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
-      <div className="flex items-center gap-4 text-[#181411]">
-        <div className="size-8">
-          <Logo />
-        </div>
-        <h2 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">Click & Croc</h2>
-      </div>
-      <div className="flex flex-1 justify-end gap-8">
-        <div className="flex items-center gap-9">
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">Home</a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">Menu</a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">About Us</a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">Contact</a>
-        </div>
-        <button
-          className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-        >
-          <div className="text-[#181411]" data-icon="ShoppingCart" data-size="20px" data-weight="regular">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-              <path
-                d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"
-              ></path>
-            </svg>
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
+        <div className="flex items-center gap-4 text-[#181411]">
+          <div className="size-8">
+          <img src={logo} alt="Logo" />
           </div>
-        </button>
-      </div>
-    </header>
+          <h2 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">Click & Croc</h2>
+        </div>
+        <div className="flex flex-1 justify-end gap-8">
+          <div className="flex items-center gap-9">
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="home">Accueil</a>
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="favorites">Favoris</a>
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="#">A propos</a>
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="#">Contact</a>
+          </div>
+          <button
+            className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+          >
+            <div className="text-[#181411]" data-icon="ShoppingCart" data-size="20px" data-weight="regular">
+              <a className="text-[#181411] text-sm font-medium leading-normal" href="orders">
+                <img src={cart} alt="Cart" />
+              </a>
+            </div>
+          </button>
+        </div>
+
+      </header>
   );
 };
 
-const Logo: React.FC = () => {
-  return (
-    <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001">
-          <g>
-            <g>
-              <path d="M473.213,201.613h-7.621c-2.468-41.795-24.856-80.421-63.68-109.466c-39.195-29.32-90.944-45.469-145.718-45.469
-                c-54.778,0-106.531,16.148-145.729,45.469C71.639,121.19,49.25,159.816,46.782,201.613h-7.993
-                c-12.852,0-23.272,10.42-23.272,23.272c0,12.852,10.42,23.272,23.272,23.272h434.425c12.852,0,23.272-10.42,23.272-23.272
-                C496.485,212.033,486.065,201.613,473.213,201.613z"/>
-            </g>
-          </g>
-          <g>
-            <g>
-              <path d="M510.799,310.573c-4.065-12.192-17.243-18.781-29.438-14.716c-10.997,3.666-19.684,6.561-39.181,6.561
-                c-19.494,0-28.183-2.895-39.184-6.561c-1.145-0.382-2.313-0.768-3.495-1.156c-11.804-3.866-25.823-7.796-50.409-7.796h-0.002
-                h-0.002c-24.589,0-38.607,3.93-50.411,7.796c-1.184,0.388-2.352,0.774-3.497,1.156c-10.998,3.666-19.685,6.561-39.178,6.561
-                c-19.497,0-28.187-2.895-39.189-6.563c-1.145-0.382-2.312-0.766-3.494-1.154c-11.802-3.866-25.821-7.795-50.406-7.796h-0.002
-                c-0.002,0-0.002,0-0.002,0c-24.588,0.002-38.605,3.93-50.408,7.796c-1.184,0.388-2.352,0.774-3.497,1.156
-                c-11,3.666-19.687,6.561-39.181,6.561c-19.497,0-28.187-2.895-39.189-6.561c-12.191-4.066-25.373,2.526-29.438,14.717
-                c-4.062,12.195,2.529,25.374,14.722,29.438c8.372,2.791,17.51,5.821,30.635,7.543v16.925
-                c0.002,55.605,45.241,100.843,100.846,100.843H364.61c55.605,0,100.844-45.238,100.846-100.844v-16.925
-                c13.122-1.721,22.259-4.752,30.628-7.542C508.276,335.948,514.867,322.768,510.799,310.573z M342.614,355.484l-63.3,63.297
-                l-23.272,23.272l-0.037,0.036l-0.036-0.036l-23.272-23.272L169.4,355.484l-21.317-21.319c4.226-0.455,9.045-0.715,14.834-0.715
-                c19.493,0,28.183,2.897,39.184,6.563c12.587,4.197,26.856,8.952,53.906,8.952c27.045,0,41.311-4.754,53.897-8.952
-                c11.002-3.666,19.69-6.563,39.189-6.563h0.002h0.002c5.79,0,10.612,0.261,14.838,0.717L342.614,355.484z"/>
-            </g>
-          </g>
-          </svg>
-    )
-};
-
-export default Navbar;
+export default Layout;
