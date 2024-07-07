@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import favorite from '../assets/favorite.svg';
 import cart from '../assets/cart.svg';
 import type { Product } from '../types';
@@ -28,9 +28,11 @@ const ProductList: React.FC<ProductListProps> = ({ productList, buttons_active =
       } else {
         console.error('Failed to create favorite');
       }
+
     };
 
     const handleAddCart = async (item_id: number): Promise<void> => {
+
       const response = await fetch(API_URL_SEGMENT + 'order_items', {
         method: 'POST',
         headers: {
@@ -78,8 +80,18 @@ interface ProductProps {
 }
 
 const Product: React.FC<ProductProps> = ({buttons_active, item_id, name, price, imageUrl, addFavorite, addOrder}) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleAnimationFavorite = () => {
+    console.log('handleAnimationFavorite');
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 1000);
+  }
+
   return (
-    <div className="flex flex-col gap-3 pb-3">
+    <div className="flex flex-col pb-3">
       <a href={`/products/${item_id}`}>
         <div
           className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
@@ -91,9 +103,16 @@ const Product: React.FC<ProductProps> = ({buttons_active, item_id, name, price, 
         </div>
       </a>
       {buttons_active &&
-      <div className="flex flex-wrap gap-4 px-4 py-2 py-2 justify-between">
-        <div className="flex items-center justify-center gap-2 px-3 py-2">
-          <button className="text-[#88636f]" data-icon="Heart" data-size="24px" data-weight="regular" onClick={() => addFavorite(item_id)}>
+      <div className="flex flex-wrap justify-between">
+        <div className="flex items-center justify-center gap-2 py-2">
+          <button className={`text-[#88636f] ${isAnimating ? 'animate-ping' : ''}`}
+                  data-icon="Heart"
+                  data-size="24px"
+                  data-weight="regular"
+                  onClick={() => {
+                    handleAnimationFavorite()
+                    addFavorite(item_id)
+                  }}>
             <img src={favorite} alt="favorite" />
           </button>
         </div>

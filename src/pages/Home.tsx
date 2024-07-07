@@ -12,6 +12,8 @@ const Home: React.FC<Props> = () => {
 
   const API_URL_SEGMENT = 'http://localhost:3000/api/v1/';
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Add this line
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
       const fetchData = async () => {
@@ -19,7 +21,7 @@ const Home: React.FC<Props> = () => {
           const response = await fetch(API_URL_SEGMENT + 'products');
           const data = await response.json();
           setProducts(data);
-          console.log(data);
+          setFilteredProducts(data);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -27,6 +29,17 @@ const Home: React.FC<Props> = () => {
 
       fetchData();
     }, []);
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value)
+      if(e.target.value != '') {
+        const filteredItems = products.filter(product =>
+        product.name.toLowerCase().includes(search.toLowerCase()))
+        setFilteredProducts(filteredItems)
+      } else {
+        setFilteredProducts(products)
+      }
+      }
 
   return (
     <div>
@@ -51,7 +64,8 @@ const Home: React.FC<Props> = () => {
               <input
                 placeholder="Recherche"
                 className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181411] focus:outline-0 focus:ring-0 border border-[#e6e0db] bg-white focus:border-[#e6e0db] h-full placeholder:text-[#897261] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
-                value=""
+                value={search}
+                onChange={(e) => handleSearch(e)}
               />
               <div className="flex items-center justify-center rounded-r-xl border-l-0 border border-[#e6e0db] bg-white pr-[7px]">
                 <button
@@ -65,7 +79,7 @@ const Home: React.FC<Props> = () => {
 
       </div>
       <h2 className="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Meilleurs Fast-food</h2>
-      <ProductList productList={products}/>
+      <ProductList productList={filteredProducts}/>
 
      </div>
   );

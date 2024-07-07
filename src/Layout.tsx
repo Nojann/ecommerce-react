@@ -29,8 +29,8 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex flex-1 justify-end gap-8">
           <div className="flex items-center gap-9">
-            <a className="text-[#181411] text-sm font-medium leading-normal" href="home">Accueil</a>
-            <a className="text-[#181411] text-sm font-medium leading-normal" href="favorites">Favoris</a>
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="/home">Accueil</a>
+            <a className="text-[#181411] text-sm font-medium leading-normal" href="/favorites">Favoris</a>
             <a className="text-[#181411] text-sm font-medium leading-normal" href="#">A propos</a>
             <a className="text-[#181411] text-sm font-medium leading-normal" href="#">Contact</a>
           </div>
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
           >
             <div className="text-[#181411]" data-icon="ShoppingCart" data-size="20px" data-weight="regular">
-              <a className="text-[#181411] text-sm font-medium leading-normal" href="orders">
+              <a className="text-[#181411] text-sm font-medium leading-normal" href="/orders">
                 <img src={cart} alt="Cart" />
               </a>
             </div>

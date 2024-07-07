@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProductList from '../components/ProductList';
+import delivery from '../assets/delivery.webp';
 import { Product } from '../types';
+import Modal from 'react-modal';
 
 interface Order {
   id: number;
@@ -17,6 +19,7 @@ const Orders: React.FC = () => {
   const API_URL_SEGMENT = 'http://localhost:3000/api/v1/';
   const [orders, setOrders] = useState<Order[]>([]);
   const [paiding, setPaiding] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const countTotalPrice = (order_items: Product[]) => {
     let total : number = 0;
@@ -76,6 +79,15 @@ const Orders: React.FC = () => {
       }
     }
 
+    const openModal = () => {
+      console.log('open modal')
+      setModalIsOpen(true);
+    }
+
+    const closeModal = () => {
+      setModalIsOpen(false);
+    }
+
 
   return (
     <div>
@@ -95,13 +107,33 @@ const Orders: React.FC = () => {
               <p className='font-bold '>TOTAL : {countTotalPrice(order.order_items)} €</p>
               {order.statut === 'draft' && <button
                 className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ec6d13] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
-                onClick={() => handlePaid(order.id)}
+                onClick={() => {
+                  handlePaid(order.id)
+                  openModal()
+                }}
               > Paiement </button>}
             </div>
             <div className="border-t border-gray-300 my-4"></div>
         </div>
       )).reverse()
       }
+        <Modal
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        contentLabel="Confirmation de paiement"
+         className="bg-white rounded-lg p-8 max-w-lg w-full shadow-lg"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      >
+        <div className="flex flex-col items-center justify-center p-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-2 text-center whitespace-nowrap">Merci d'avoir passé commande chez Click & Croc</h2>
+          <img src={delivery} alt="Delivery Image" className="max-w-xs mb-4"/>
+          <p className="text-lg text-gray-600 mb-4 text-center">Un livreur va passer chez vous d'ici une heure !</p>
+          <button onClick={closeModal} className="flex w-full max-w-[480px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 md:h-12 md:px-5 bg-[#ec6d13] text-white text-sm font-bold tracking-wide md:text-base">
+              Confirmer
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
